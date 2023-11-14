@@ -1,0 +1,151 @@
+{
+  "information": {
+    "release": {
+      "releaseVersion": "4.6.2",
+      "releaseEdition": "",
+      "releaseRevision": 0
+    }
+  },
+  "sw": {
+    "NV_L4T_FILE_SYSTEM_AND_OS_T186_COMP": {
+      "name": "File System, OS and Forecr TX2 BSP Package Install",
+      "isVisible": true,
+      "isDetectableInstall": false,
+      "versions": [
+        {
+          "operatingSystems": [
+            "ubuntu1604",
+            "ubuntu1804"
+          ],
+          "targetIds": [
+            "JETSON_TX2_TARGETS"
+          ],
+          "prerequisites": [],
+          "downloadFiles": [
+            {
+              "url": "T186/Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2",
+              "fileName": "Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2",
+              "size": 1520544746,
+              "checksum": "63865585a6f10e119ff32a34b2c19cef",
+              "checksumType": "md5",
+              "verifyChecksum": "yes",
+              "installParameters": {
+                "additionalParameters": {
+                  "installDir": "{{TARGET_ROOT}}/{{BUNDLE_TITLE}}_{{BOARD_ID}}/Linux_for_Tegra/rootfs/",
+                  "installCommands": [
+                    {
+                      "execBash": [
+                        "sudo tar xpf {{FILE_PATH}}",
+                        "cd ..",
+                        "sudo ./tools/l4t_flash_prerequisites.sh",
+                        "sudo ./apply_binaries.sh",
+                        "sudo mkdir -p rootfs/opt/nvidia/deb_repos",
+                        "wget https://github.com/forecr/dsboard_nx2_tx2_nx_bsp/raw/master/tx2_nx_JP4_6_1_bsp.tar.xz 2>downloadstatus.txt",
+                        "tar -xvf tx2_nx_JP4_6_1_bsp.tar.xz",
+                        "cd ./tx2_nx_JP4_6_1_bsp",
+                        "cp Image ../kernel/",
+                        "cp tegra186-p3636-0001-p3509-0000-a01.dtb ../kernel/dtb/",
+                        "cp tegra186-bpmp-p3636-0001-a00-00.dtb ../bootloader/t186ref/",
+                        "cp tegra186-mb1-bct-pinmux-p3636-0001-a00.cfg ../bootloader/t186ref/BCT/",
+                        "cd .."                       
+                      ]
+                    }
+                  ]
+                },
+                "installEngineQueue": "sequential",
+                "installType": "cmd"
+              }
+            }
+          ],
+          "version": "32.7",
+          "dependencies": [
+            {
+              "type": "optional",
+              "id": "NV_L4T_DRIVERS_T186_COMP",
+              "ver": "32.7",
+              "operator": "=="
+            }
+          ],
+          "installSizeMB": 4934.032
+        }
+      ],
+      "licenseId": "NV_JETPACK_OS_EULA",
+      "id": "NV_L4T_FILE_SYSTEM_AND_OS_T186_FORECR_BSP_PACKAGE_COMP",
+      "isPartiallyDetectableInstall": false,
+      "installPath": "{{TARGET_ROOT}}/{{BUNDLE_TITLE}}_{{BOARD_ID}}/"
+    },
+"NV_L4T_FLASH_TX2_WITH_OS_IMAGE_COMP": {
+            "name": "Forecr Flash TX2",
+            "isVisible": true,
+            "estimateInstallDurationSeconds": 500,
+            "versions": [
+                {
+                    "operatingSystems": [
+                        "ubuntu1604",
+                        "ubuntu1804"
+                    ],
+                    "installSizeMB": 9520,
+                    "targetIds": [
+                        "JETSON_TX2_TARGETS"
+                    ],
+                    "prerequisites": [],
+                    "downloadFiles": [],
+                    "installParameters": {
+                        "installDir": "{{TARGET_ROOT}}/{{BUNDLE_TITLE}}_{{BOARD_ID}}/Linux_for_Tegra",
+                        "installEngineQueue": "parallel",
+                        "installCommands": [
+                            {
+                                "execBash": [
+                                    "set -e",
+                                    "unset LC_ALL",
+                                    "echo sudo ./flash.sh jetson-xavier-nx-devkit-tx2-nx mmcblk0p1",
+				     "sudo ./flash.sh jetson-xavier-nx-devkit-tx2-nx mmcblk0p1",
+                                    "sleep 20"
+                                ]
+                            }
+                        ]
+                    },
+                    "version": "32.7",
+                    "dependencies": [
+                        {
+                            "type": "optional",
+                            "id": "NV_L4T_FILE_SYSTEM_AND_OS_T186_COMP",
+                            "ver": "32.7",
+                            "operator": "=="
+                        }
+                    ]
+                }
+            ],
+            "licenseId": "NV_JETPACK_OS_EULA",
+            "id": "NV_L4T_FORECR_FLASH_TX2_WITH_OS_IMAGE_COMP",
+            "isDetectableInstall": false,
+            "isPartiallyDetectableInstall": false
+        }
+  },
+  "hw": {
+    "JETSON_TX2_NX": {
+      "name": "Jetson TX2 NX",
+      "products": [
+        "Jetson"
+      ],
+      "deviceIdentificationDetails": {
+        "moduleNames": [
+          "P3636-0001 [NX]"
+        ],
+        "moduleIds": [
+          "3636-0001"
+        ],
+        "moduleDescription": "P3636-0001 module",
+        "tegraRecoveryModeCodes": [
+          "0955:7c18"
+        ],
+        "carrierIds": [
+          "3509-0000"
+        ],
+        "carrierDescription": "P3509-0000 carrier board"
+      },
+      "imagePath": "https://developer.download.nvidia.com/sdkmanager/resources/hw_images/JETSON/JETSON_TX2_NX.png",
+      "id": "JETSON_TX2_NX"
+    }
+  }
+}
